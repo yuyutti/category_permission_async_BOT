@@ -70,6 +70,30 @@ client.on('messageCreate', async (message) => {
     }
 });
 
+client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
 
+    if (message.content === '!set') {
+    const category = message.guild.channels.cache.get(categoryId);
+    
+    if (category && category.type === 'GUILD_CATEGORY') {
+        const voiceChannels = category.children.filter(channel => channel.type === 'GUILD_VOICE');
+        
+        if (voiceChannels.size === 0) {
+        message.reply('カテゴリー内にボイスチャンネルがありません。');
+        return;
+        }
+        
+        voiceChannels.forEach(async voiceChannel => {
+        await voiceChannel.edit({
+            userLimit: 5
+        });
+        console.log(`ボイスチャンネル ${voiceChannel.name} の人数制限を2人に設定しました。`);
+        });
+    } else {
+        message.reply(`指定されたカテゴリーは存在しないかカテゴリーではありません。`);
+    }
+    }
+});
 
 client.login(token);
