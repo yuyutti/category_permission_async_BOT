@@ -28,8 +28,8 @@ client.on('messageCreate', async (message) => {
         const role = guild.roles.cache.get(targetRoleId);
 
         // 1から49までのチャンネルを作成
-        for (let i = 1; i <= 5; i++) {
-            const channelName = `配信用 ${i}`;
+        for (let i = 1; i <= 50; i++) {
+            const channelName = `VC ${i}`;
             
             // チャンネルを作成
             const channel = await guild.channels.create(channelName, {
@@ -86,7 +86,7 @@ client.on('messageCreate', async (message) => {
         
         voiceChannels.forEach(async voiceChannel => {
         await voiceChannel.edit({
-            userLimit: 5
+            userLimit: 4
         });
         console.log(`ボイスチャンネル ${voiceChannel.name} の人数制限を2人に設定しました。`);
         });
